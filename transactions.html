@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transactions</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<h2>Your Transactions</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Date</th>
+    </tr>
+    {% for t in transactions %}
+    <tr>
+        <td>{{ t.id }}</td>
+        <td>{{ t.type }}</td>
+        <td>{{ t.amount }}</td>
+        <td>{{ t.category }}</td>
+        <td>{{ t.description }}</td>
+        <td>{{ t.date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

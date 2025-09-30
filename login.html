@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Finance Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            margin: 20px auto;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            width: 350px;
+        }
+        input, select, button {
+            margin: 8px 0;
+            padding: 6px;
+            width: 90%;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        a {
+            text-decoration: none;
+            color: blue;
+        }
+        .menu a {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+{% if page == 'login' %}
+    <div class="container">
+        <h2>Login</h2>
+        <form method="POST" action="/">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+
+{% elif page == 'register' %}
+    <div class="container">
+        <h2>Register</h2>
+        <form method="POST" action="/register">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Register</button>
+        </form>
+        <p><a href="/">Back to Login</a></p>
+    </div>
+
+{% elif page == 'dashboard' %}
+    <h2>Welcome, {{ username }}</h2>
+    <div class="menu">
+        <a href="/add">Add Transaction</a> |
+        <a href="/transactions">View Transactions</a> |
+        <a href="/summary">Monthly Summary</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+{% elif page == 'add' %}
+    <div class="container">
+        <h2>Add Transaction</h2>
+        <form method="POST">
+            <select name="type" required>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select><br>
+            <input type="number" name="amount" placeholder="Amount" step="0.01" required><br>
+            <input type="text" name="category" placeholder="Category"><br>
+            <input type="text" name="description" placeholder="Description"><br>
+            <input type="date" name="date" required><br>
+            <button type="submit">Add</button>
+        </form>
+        <p><a href="/dashboard">Back to Dashboard</a></p>
+    </div>
+
+{% elif page == 'transactions' %}
+    <h2>Your Transactions</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Date</th>
+        </tr>
+        {% for t in transactions %}
+        <tr>
+            <td>{{ t.id }}</td>
+            <td>{{ t.type }}</td>
+            <td>{{ t.amount }}</td>
+            <td>{{ t.category }}</td>
+            <td>{{ t.description }}</td>
+            <td>{{ t.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="/dashboard">Back to Dashboard</a></p>
+
+{% elif page == 'summary' %}
+    <h2>Summary for {{ year }}-{{ month }}</h2>
+    <form method="POST">
+        <input type="month" name="month" required>
+        <button type="submit">View</button>
+    </form>
+    <p>Income: {{ income }}</p>
+    <p>Expense: {{ expense }}</p>
+    <p>Balance: {{ balance }}</p>
+    <p><a href="/dashboard">Back to Dashboard</a></p>
+
+{% endif %}
+</body>
+</html>

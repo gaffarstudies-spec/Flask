@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monthly Summary</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<h2>Summary for {{ year }}-{{ month }}</h2>
+<form method="POST">
+    <label>Select Month:</label>
+    <input type="month" name="month" required>
+    <button type="submit">View</button>
+</form>
+
+<p>Income: {{ income }}</p>
+<p>Expense: {{ expense }}</p>
+<p>Balance: {{ balance }}</p>
+</body>
+</html>
