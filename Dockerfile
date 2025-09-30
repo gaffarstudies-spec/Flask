@@ -19,4 +19,4 @@ COPY Finance\ Tracker\ Web/ /app/
 EXPOSE 8000
 
 # Run the app with gunicorn
-CMD ["gunicorn", "Web:app", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "Web:app", "--bind", "0.0.0.0:${PORT}"]
