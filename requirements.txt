@@ -1,2 +1,25 @@
-flask
-gunicorn
+# Web framework
+Flask==2.3.2
+
+# Production WSGI server (Render needs this instead of "flask run")
+gunicorn==21.2.0
+
+# Database (choose one depending on what you use)
+# For SQLite (built-in with Python, no need to install extra packages)
+# For PostgreSQL (Render often uses this):
+psycopg2-binary==2.9.9
+
+# OR for MySQL:
+# mysqlclient==2.2.0
+
+# ORM (optional but recommended)
+SQLAlchemy==2.0.20
+
+# Environment variables (if you plan to use .env file locally)
+python-dotenv==1.0.0
+
+# Password hashing / authentication
+bcrypt==4.0.1
+
+# Form validation (if needed)
+WTForms==3.0.1
