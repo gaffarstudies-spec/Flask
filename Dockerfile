@@ -1,22 +1,26 @@
-# Use official Python runtime as a parent image
+# Use a lightweight Python image
 FROM python:3.10-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set work directory
+# Set working directory inside container
 WORKDIR /app
 
+# Install system dependencies (optional: psycopg2, sqlite, etc.)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first (for caching)
+COPY requirements.txt .
+
 # Install dependencies
-COPY Finance\ Tracker\ Web/requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
-COPY Finance\ Tracker\ Web/ /app/
+# Copy project files (rename your folder: finance_tracker_web)
+COPY finance_tracker_web/ /app/
 
-# Expose port
-EXPOSE 8000
+# Expose port (Render expects 10000+ but Flask defaults to 5000)
+EXPOSE 5000
 
-# Run the app with gunicorn
-CMD ["gunicorn", "Web:app", "--bind", "0.0.0.0:${PORT}"]
+# Start the app
+CMD ["python", "app.py"]
